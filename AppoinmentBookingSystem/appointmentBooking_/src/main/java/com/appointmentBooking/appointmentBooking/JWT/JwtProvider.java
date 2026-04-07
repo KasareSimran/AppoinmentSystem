@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+
+//this is code for jwt where valiadte generate token and exraxt username
 @Component
 public class JwtProvider {
 
