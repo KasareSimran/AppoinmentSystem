@@ -1,7 +1,6 @@
 package com.appointmentBooking.appointmentBooking.Service;
 
 
-
 import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import com.appointmentBooking.appointmentBooking.Entity.User;
 import org.springframework.security.core.userdetails.*;
