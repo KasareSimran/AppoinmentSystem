@@ -21,7 +21,7 @@ import java.util.Map;
 public class AuthController {
 
 
-    private UserService userService;
+    private final UserService userService;
 
     // Constructor Injection (best practice)
     public AuthController(UserService userService) {

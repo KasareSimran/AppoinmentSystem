@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class SlotServiceImpl implements SlotService{
 
-    private SlotRepo slotRepo;
+    private final SlotRepo slotRepo;
 
     public SlotServiceImpl (SlotRepo slotRepo){
         this.slotRepo=slotRepo;
