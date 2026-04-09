@@ -4,6 +4,8 @@ import com.appointmentBooking.appointmentBooking.DTO.SlotRequest;
 import com.appointmentBooking.appointmentBooking.Entity.Slot;
 import com.appointmentBooking.appointmentBooking.Enum.SlotStatus;
 import com.appointmentBooking.appointmentBooking.Repository.SlotRepo;
+import com.appointmentBooking.appointmentBooking.exception.InvalidSlotTimeException;
+import com.appointmentBooking.appointmentBooking.exception.SlotAlreadyExistsException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +27,24 @@ public class SlotServiceImpl implements SlotService{
 
     @Override
     public Slot createSlot(SlotRequest request) {
+
+        //validate time
+        if(request.getEndTime().isBefore(request.getStartTime())){
+            throw new InvalidSlotTimeException("End time must be after start time");
+        }
+
+
+        //prevent duplicate slot
+        boolean exists = slotRepo.existsByStartTimeAndEndTime(
+                request.getStartTime(),
+                request.getEndTime()
+        );
+
+        if (exists) {
+            throw new SlotAlreadyExistsException("Slot already exists for this time");
+        }
+
+        //create slot
         Slot slot = new Slot();
         slot.setStartTime(request.getStartTime());
         slot.setEndTime(request.getEndTime());

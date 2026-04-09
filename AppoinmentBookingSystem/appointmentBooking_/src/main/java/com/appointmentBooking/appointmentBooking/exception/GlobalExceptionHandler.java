@@ -29,4 +29,26 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
+
+    @ExceptionHandler(SlotAlreadyExistsException.class)
+    public ResponseEntity<?> handleSlotExists(SlotAlreadyExistsException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", false);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidSlotTimeException.class)
+    public ResponseEntity<?> handleInvalidTime(InvalidSlotTimeException ex) {
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", ex.getMessage());
+        response.put("status", false);
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
 }
