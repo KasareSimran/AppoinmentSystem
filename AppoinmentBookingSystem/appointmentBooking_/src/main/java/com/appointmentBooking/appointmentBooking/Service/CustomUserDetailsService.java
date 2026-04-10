@@ -3,10 +3,12 @@ package com.appointmentBooking.appointmentBooking.Service;
 
 import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import com.appointmentBooking.appointmentBooking.Entity.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -26,7 +28,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getPhone(),
                 user.getPassword(),
-                new ArrayList<>()
+//                new ArrayList<>()
+                List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
         );
     }
 }
