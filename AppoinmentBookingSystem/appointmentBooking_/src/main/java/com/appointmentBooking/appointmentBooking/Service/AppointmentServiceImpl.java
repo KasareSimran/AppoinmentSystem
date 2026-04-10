@@ -1,6 +1,7 @@
 package com.appointmentBooking.appointmentBooking.Service;
 
 
+import com.appointmentBooking.appointmentBooking.DTO.AppointmentResponse;
 import com.appointmentBooking.appointmentBooking.Entity.Appointment;
 import com.appointmentBooking.appointmentBooking.Entity.Slot;
 import com.appointmentBooking.appointmentBooking.Entity.User;
@@ -10,6 +11,10 @@ import com.appointmentBooking.appointmentBooking.Repository.AppointmentRepo;
 import com.appointmentBooking.appointmentBooking.Repository.SlotRepo;
 import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
@@ -85,4 +90,59 @@ public class AppointmentServiceImpl implements AppointmentService{
 
         return "Appointment cancel Successfully!!";
     }
+
+
+    @Override
+    public List<AppointmentResponse> getMyAppointments(String phone) {
+
+        List<Appointment> appointments = appointmentRepo.findByUser_Phone(phone);
+
+        return appointments.stream().map(a -> {
+
+            String slotTime = a.getSlot().getStartTime().toLocalTime() +
+                    " - " +
+                    a.getSlot().getEndTime().toLocalTime();
+
+            return new AppointmentResponse(
+                    a.getId(),
+                    a.getUser().getName(),
+                    a.getUser().getPhone(),
+                    slotTime,
+                    a.getStatus().name()
+            );
+
+        }).toList();
+    }
+
+
+
+    @Override
+    public List<AppointmentResponse> getAppointmentsByDate(LocalDate date) {
+
+        LocalDateTime start = date.atStartOfDay();
+        LocalDateTime end = date.atTime(23, 59, 59);
+
+        List<Appointment> appointments =
+                appointmentRepo.findBySlot_StartTimeBetween(start, end);
+
+        return appointments.stream().map(a -> {
+
+            String slotTime = a.getSlot().getStartTime().toLocalTime() +
+                    " - " +
+                    a.getSlot().getEndTime().toLocalTime();
+
+            return new AppointmentResponse(
+                    a.getId(),
+                    a.getUser().getName(),
+                    a.getUser().getPhone(),
+                    slotTime,
+                    a.getStatus().name()
+            );
+
+        }).toList();
+    }
+
+
+
+
 }
