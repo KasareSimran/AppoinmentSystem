@@ -19,7 +19,7 @@ public class SlotController {
     }
 
     //post maapping-admin create slot
-    @PostMapping
+    @PostMapping("/create")
     public Slot createSlot(@RequestBody SlotRequest request){
         return slotService.createSlot(request);
     }

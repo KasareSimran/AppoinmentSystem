@@ -12,43 +12,39 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<?> handleUserExists(UserAlreadyExistsException ex) {
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", ex.getMessage());
-        response.put("status", false);
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
-
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> handleRuntime(RuntimeException ex) {
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", ex.getMessage());
-        response.put("status", false);
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
 
     @ExceptionHandler(SlotAlreadyExistsException.class)
     public ResponseEntity<?> handleSlotExists(SlotAlreadyExistsException ex) {
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", ex.getMessage());
-        response.put("status", false);
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleUser(UserNotFoundException ex) {
+        return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
+    }
 
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(SlotNotAvailableException.class)
+    public ResponseEntity<?> handleSlot(SlotNotAvailableException ex) {
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AppointmentNotFoundException.class)
+    public ResponseEntity<?> handleAppointment(AppointmentNotFoundException ex) {
+        return buildResponse(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidSlotTimeException.class)
     public ResponseEntity<?> handleInvalidTime(InvalidSlotTimeException ex) {
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", ex.getMessage());
-        response.put("status", false);
-
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        return buildResponse(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
+    // ✅ COMMON METHOD
+    private ResponseEntity<?> buildResponse(String msg, HttpStatus status) {
+        Map<String, Object> res = new HashMap<>();
+        res.put("message", msg);
+        res.put("status", false);
+        return new ResponseEntity<>(res, status);
+    }
 }

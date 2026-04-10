@@ -8,6 +8,7 @@ import com.appointmentBooking.appointmentBooking.Enum.Role;
 import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import com.appointmentBooking.appointmentBooking.JWT.JwtProvider;
 import com.appointmentBooking.appointmentBooking.exception.UserAlreadyExistsException;
+import com.appointmentBooking.appointmentBooking.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,9 @@ public class UserServiceImpl implements UserService {
         user.setName(request.getName());
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setRole(Role.valueOf(request.getRole()));
-        user.setRole(Role.USER);
+        user.setRole(Role.valueOf(request.getRole().toUpperCase()));
+
+//        user.setRole(Role.USER);
 
 
         return userRepo.save(user);
@@ -53,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public String login(LoginRequest request) {
 
         User user = userRepo.findByPhone(request.getPhone())
-                .orElseThrow(() -> new RuntimeException("User not found!"));
+                .orElseThrow(() -> new UserNotFoundException("User not found!"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
         {
@@ -69,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public User getProfile(String phone) {
 
         return userRepo.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
 
@@ -77,7 +79,7 @@ public class UserServiceImpl implements UserService {
     public User updateProfile(String phone, RegisterRequest request) {
 
         User user = userRepo.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!user.getPhone().equals(request.getPhone()) &&
                 userRepo.findByPhone(request.getPhone()).isPresent()) {
@@ -96,7 +98,7 @@ public class UserServiceImpl implements UserService {
     public String changePassword(String phone, ChangePasswordRequest request) {
 
         User user = userRepo.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new RuntimeException("Old password incorrect");
@@ -112,7 +114,7 @@ public class UserServiceImpl implements UserService {
     public String deleteUser(String phone) {
 
         User user = userRepo.findByPhone(phone)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
 
         userRepo.delete(user);
 

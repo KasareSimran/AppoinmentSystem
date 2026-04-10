@@ -10,6 +10,9 @@ import com.appointmentBooking.appointmentBooking.Enum.SlotStatus;
 import com.appointmentBooking.appointmentBooking.Repository.AppointmentRepo;
 import com.appointmentBooking.appointmentBooking.Repository.SlotRepo;
 import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
+import com.appointmentBooking.appointmentBooking.exception.AppointmentNotFoundException;
+import com.appointmentBooking.appointmentBooking.exception.SlotNotAvailableException;
+import com.appointmentBooking.appointmentBooking.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -42,16 +45,23 @@ public class AppointmentServiceImpl implements AppointmentService{
 
         //get user
         User user=userRepo.findByPhone(phone)
-                .orElseThrow(()->new RuntimeException("User not found"));
+                .orElseThrow(()->new UserNotFoundException("User not found"));
 
 
         //get slot
         Slot slot=slotRepo.findById(slotId)
-                .orElseThrow(()->new RuntimeException("Slot is not available"));
+                .orElseThrow(()->new SlotNotAvailableException("Slot is not available"));
+
+
+
+        if (slot.getStartTime().isBefore(LocalDateTime.now())) {
+            throw new SlotNotAvailableException("Cannot book past slot");
+        }
+
 
         //prevent double booking
         if(slot.getStatus()!= SlotStatus.AVAILABLE ) {
-            throw new RuntimeException("Slot is already booked");
+            throw new SlotNotAvailableException("Slot is already booked");
         }
 
         //create appointment
@@ -77,7 +87,12 @@ public class AppointmentServiceImpl implements AppointmentService{
     public String cancelAppointment(Long appointmentId) {
 
         Appointment appointment=appointmentRepo.findById(appointmentId)
-                .orElseThrow(()-> new RuntimeException("Appointment not found"));
+                .orElseThrow(()-> new AppointmentNotFoundException("Appointment not found"));
+
+        if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
+            throw new RuntimeException("Already cancelled");
+        }
+
 
         appointment.setStatus(AppointmentStatus.CANCELLED);
 
