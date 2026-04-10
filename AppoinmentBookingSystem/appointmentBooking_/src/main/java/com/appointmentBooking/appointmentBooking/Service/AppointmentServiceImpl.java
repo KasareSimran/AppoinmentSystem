@@ -14,6 +14,9 @@ import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import com.appointmentBooking.appointmentBooking.exception.AppointmentNotFoundException;
 import com.appointmentBooking.appointmentBooking.exception.SlotNotAvailableException;
 import com.appointmentBooking.appointmentBooking.exception.UserNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -109,15 +112,43 @@ public class AppointmentServiceImpl implements AppointmentService{
     }
 
 
+//    @Override
+//    public <AppointmentResponse> getMyAppointments(String phone) {
+//
+//        List<Appointment> appointments = appointmentRepo.findByUser_Phone(phone);
+//
+//        return appointments.stream().map(a -> {
+//
+//            String slotTime = a.getSlot().getStartTime().toLocalTime() +
+//                    " - " +
+//                    a.getSlot().getEndTime().toLocalTime();
+//
+//            return new AppointmentResponse(
+//                    a.getId(),
+//                    a.getUser().getName(),
+//                    a.getUser().getPhone(),
+//                    slotTime,
+//                    a.getStatus().name()
+//            );
+//
+//        }).toList();
+//    }
+
+
+    //with pagination
+
     @Override
-    public List<AppointmentResponse> getMyAppointments(String phone) {
+    public Page<AppointmentResponse> getMyAppointments(String phone, int page, int size) {
 
-        List<Appointment> appointments = appointmentRepo.findByUser_Phone(phone);
+        Pageable pageable = PageRequest.of(page, size);
 
-        return appointments.stream().map(a -> {
+        Page<Appointment> appointmentPage =
+                appointmentRepo.findByUser_Phone(phone, pageable);
 
-            String slotTime = a.getSlot().getStartTime().toLocalTime() +
-                    " - " +
+        return appointmentPage.map(a -> {
+
+            String slotTime = a.getSlot().getStartTime().toLocalTime()
+                    + " - " +
                     a.getSlot().getEndTime().toLocalTime();
 
             return new AppointmentResponse(
@@ -127,8 +158,7 @@ public class AppointmentServiceImpl implements AppointmentService{
                     slotTime,
                     a.getStatus().name()
             );
-
-        }).toList();
+        });
     }
 
 

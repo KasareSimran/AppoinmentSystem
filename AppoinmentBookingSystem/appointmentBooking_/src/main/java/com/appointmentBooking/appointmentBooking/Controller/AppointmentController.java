@@ -4,6 +4,7 @@ package com.appointmentBooking.appointmentBooking.Controller;
 import com.appointmentBooking.appointmentBooking.DTO.ApiResponse;
 import com.appointmentBooking.appointmentBooking.DTO.AppointmentResponse;
 import com.appointmentBooking.appointmentBooking.Service.AppointmentService;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +34,19 @@ public class AppointmentController {
     }
 
 
+//    @GetMapping("/my")
+//    public List<AppointmentResponse> getMyAppointments(Authentication auth) {
+//        return appointmentService.getMyAppointments(auth.getName());
+//    }
+
+    //with pagination
     @GetMapping("/my")
-    public List<AppointmentResponse> getMyAppointments(Authentication auth) {
-        return appointmentService.getMyAppointments(auth.getName());
+    public Page<AppointmentResponse> getMyAppointments(
+            Authentication auth,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size
+    ) {
+        return appointmentService.getMyAppointments(auth.getName(), page, size);
     }
 
 
