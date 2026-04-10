@@ -61,6 +61,8 @@ public class SlotServiceImpl implements SlotService{
 
     @Override
     public List<Slot> getAvailableSlots() {
-        return slotRepo.findByStatus(SlotStatus.AVAILABLE);
+//        return slotRepo.findByStatus(SlotStatus.AVAILABLE);
+        return slotRepo.findByStatusOrderByStartTimeAsc(SlotStatus.AVAILABLE);
+
     }
 }

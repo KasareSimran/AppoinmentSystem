@@ -11,7 +11,11 @@ import java.util.List;
 
 @Repository
 public interface SlotRepo extends JpaRepository<Slot,Long> {
-    List<Slot> findByStatus(SlotStatus status);
+//    List<Slot> findByStatus(SlotStatus status);
+
+    //sort
+    List<Slot> findByStatusOrderByStartTimeAsc(SlotStatus status);
+
 
     boolean existsByStartTimeAndEndTime(LocalDateTime startTime, LocalDateTime endTime);
 

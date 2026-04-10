@@ -1,6 +1,7 @@
 package com.appointmentBooking.appointmentBooking.Service;
 
 
+import com.appointmentBooking.appointmentBooking.DTO.ApiResponse;
 import com.appointmentBooking.appointmentBooking.DTO.AppointmentResponse;
 import com.appointmentBooking.appointmentBooking.Entity.Appointment;
 import com.appointmentBooking.appointmentBooking.Entity.Slot;
@@ -40,7 +41,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 
     @Override
-    public String bookAppointment(String phone, Long slotId) {
+    public ApiResponse bookAppointment(String phone, Long slotId) {
 
 
         //get user
@@ -77,7 +78,8 @@ public class AppointmentServiceImpl implements AppointmentService{
         slotRepo.save(slot);
         appointmentRepo.save(appointment);
 
-        return "Appointment Booked Successfully";
+        return new ApiResponse("Appointment booked successfully", true);
+
     }
 
 
