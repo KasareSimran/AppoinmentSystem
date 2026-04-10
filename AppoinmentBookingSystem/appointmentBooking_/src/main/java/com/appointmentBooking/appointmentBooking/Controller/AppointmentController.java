@@ -1,8 +1,8 @@
 package com.appointmentBooking.appointmentBooking.Controller;
 
 
+import com.appointmentBooking.appointmentBooking.DTO.ApiResponse;
 import com.appointmentBooking.appointmentBooking.DTO.AppointmentResponse;
-import com.appointmentBooking.appointmentBooking.Entity.Appointment;
 import com.appointmentBooking.appointmentBooking.Service.AppointmentService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ public class AppointmentController {
 
 
     @PostMapping("/book/{slotId}")
-    public String book(Authentication auth, @PathVariable Long slotId){
+    public ApiResponse book(Authentication auth, @PathVariable Long slotId){
         return appointmentService.bookAppointment(auth.getName(), slotId);
     }
 
