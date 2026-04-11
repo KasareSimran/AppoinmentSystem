@@ -79,3 +79,8 @@
 2026-04-11T15:23:13.748+05:30  WARN 8640 --- [appointmentBooking ] [http-nio-8080-exec-2] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
 2026-04-11T15:24:40.362+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-5] c.a.a.Service.AppointmentServiceImpl     : Booking request started for user: 7447433167 and slot: 4
 2026-04-11T15:24:40.404+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-5] c.a.a.Service.AppointmentServiceImpl     : Appointment booked successfully for user: 7447433167 and slot: 4
+2026-04-11T19:01:42.643+05:30  INFO 8640 --- [appointmentBooking ] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-11T19:01:42.868+05:30  INFO 8640 --- [appointmentBooking ] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-11T19:01:43.077+05:30  INFO 8640 --- [appointmentBooking ] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-11T19:01:43.187+05:30  INFO 8640 --- [appointmentBooking ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-11T19:01:43.223+05:30  INFO 8640 --- [appointmentBooking ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

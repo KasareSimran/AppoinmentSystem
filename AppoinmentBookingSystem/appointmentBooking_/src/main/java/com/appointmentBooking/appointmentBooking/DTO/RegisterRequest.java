@@ -2,7 +2,6 @@ package com.appointmentBooking.appointmentBooking.DTO;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.*;
 
 
 
