@@ -23,7 +23,7 @@ public class AppointmentController {
 
 
     @PostMapping("/book/{slotId}")
-    public ApiResponse book(Authentication auth, @PathVariable Long slotId){
+    public String book(Authentication auth, @PathVariable Long slotId){
         return appointmentService.bookAppointment(auth.getName(), slotId);
     }
 

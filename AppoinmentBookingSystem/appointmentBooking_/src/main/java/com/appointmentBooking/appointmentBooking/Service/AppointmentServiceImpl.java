@@ -14,6 +14,9 @@ import com.appointmentBooking.appointmentBooking.Repository.UserRepo;
 import com.appointmentBooking.appointmentBooking.exception.AppointmentNotFoundException;
 import com.appointmentBooking.appointmentBooking.exception.SlotNotAvailableException;
 import com.appointmentBooking.appointmentBooking.exception.UserNotFoundException;
+import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -25,6 +28,9 @@ import java.util.List;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService{
+
+
+    private static final Logger logger = LoggerFactory.getLogger(AppointmentServiceImpl.class);
 
     private final AppointmentRepo appointmentRepo;
     private final SlotRepo slotRepo;
@@ -44,27 +50,37 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 
     @Override
-    public ApiResponse bookAppointment(String phone, Long slotId) {
+    @Transactional
+    public String bookAppointment(String phone, Long slotId) {
 
+
+        logger.info("Booking request started for user: {} and slot: {}", phone, slotId);
 
         //get user
         User user=userRepo.findByPhone(phone)
-                .orElseThrow(()->new UserNotFoundException("User not found"));
+                .orElseThrow(() -> {
+                    logger.error("User not found: {}", phone);
+                    return new UserNotFoundException("User not found");
+                });
 
 
         //get slot
         Slot slot=slotRepo.findById(slotId)
-                .orElseThrow(()->new SlotNotAvailableException("Slot is not available"));
-
+                .orElseThrow(() -> {
+                    logger.error("Slot not found: {}", slotId);
+                    return new SlotNotAvailableException("Slot not found");
+                });
 
 
         if (slot.getStartTime().isBefore(LocalDateTime.now())) {
+            logger.warn("Attempt to book past slot: {}", slotId);
             throw new SlotNotAvailableException("Cannot book past slot");
         }
 
 
         //prevent double booking
         if(slot.getStatus()!= SlotStatus.AVAILABLE ) {
+            logger.warn("Slot already booked: {}", slotId);
             throw new SlotNotAvailableException("Slot is already booked");
         }
 
@@ -81,8 +97,9 @@ public class AppointmentServiceImpl implements AppointmentService{
         slotRepo.save(slot);
         appointmentRepo.save(appointment);
 
-        return new ApiResponse("Appointment booked successfully", true);
+        logger.info("Appointment booked successfully for user: {} and slot: {}", phone, slotId);
 
+        return "Appointment Booked Successfully";
     }
 
 
@@ -91,13 +108,20 @@ public class AppointmentServiceImpl implements AppointmentService{
     @Override
     public String cancelAppointment(Long appointmentId) {
 
+        logger.info("Cancel request for appointment: {}", appointmentId);
+
         Appointment appointment=appointmentRepo.findById(appointmentId)
-                .orElseThrow(()-> new AppointmentNotFoundException("Appointment not found"));
+                .orElseThrow(() -> {
+                    logger.error("Appointment not found: {}", appointmentId);
+                    return new AppointmentNotFoundException("Appointment not found");
+                });
+
+
 
         if (appointment.getStatus() == AppointmentStatus.CANCELLED) {
-            throw new RuntimeException("Already cancelled");
+            logger.warn("Appointment already cancelled: {}", appointmentId);
+            throw new RuntimeException("Appointment already cancelled");
         }
-
 
         appointment.setStatus(AppointmentStatus.CANCELLED);
 
@@ -107,6 +131,8 @@ public class AppointmentServiceImpl implements AppointmentService{
 
         slotRepo.save(slot);
         appointmentRepo.save(appointment);
+
+        logger.info("Appointment cancelled successfully: {}", appointmentId);
 
         return "Appointment cancel Successfully!!";
     }

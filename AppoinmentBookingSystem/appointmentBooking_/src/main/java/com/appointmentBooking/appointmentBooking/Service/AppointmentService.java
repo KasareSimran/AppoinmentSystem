@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AppointmentService {
 
-    ApiResponse bookAppointment(String phone, Long slotId);
+    String bookAppointment(String phone, Long slotId);
 
     String cancelAppointment(Long appointmentId);
 
