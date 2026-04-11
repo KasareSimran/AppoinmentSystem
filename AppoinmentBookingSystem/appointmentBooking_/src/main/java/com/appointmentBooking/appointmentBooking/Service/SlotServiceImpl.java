@@ -6,6 +6,8 @@ import com.appointmentBooking.appointmentBooking.Enum.SlotStatus;
 import com.appointmentBooking.appointmentBooking.Repository.SlotRepo;
 import com.appointmentBooking.appointmentBooking.exception.InvalidSlotTimeException;
 import com.appointmentBooking.appointmentBooking.exception.SlotAlreadyExistsException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @Service
 public class SlotServiceImpl implements SlotService{
+    private static final Logger logger = LoggerFactory.getLogger(SlotServiceImpl.class);
+
 
     private final SlotRepo slotRepo;
 
@@ -28,8 +32,12 @@ public class SlotServiceImpl implements SlotService{
     @Override
     public Slot createSlot(SlotRequest request) {
 
+        logger.info("Creating slot from {} to {}", request.getStartTime(), request.getEndTime());
+
+
         //validate time
         if(request.getEndTime().isBefore(request.getStartTime())){
+            logger.warn("Invalid slot time: endTime before startTime");
             throw new InvalidSlotTimeException("End time must be after start time");
         }
 
@@ -41,6 +49,7 @@ public class SlotServiceImpl implements SlotService{
         );
 
         if (exists) {
+            logger.warn("Duplicate slot attempt: {} - {}", request.getStartTime(), request.getEndTime());
             throw new SlotAlreadyExistsException("Slot already exists for this time");
         }
 
@@ -50,8 +59,11 @@ public class SlotServiceImpl implements SlotService{
         slot.setEndTime(request.getEndTime());
         slot.setStatus(SlotStatus.AVAILABLE);
 
+        Slot savedSlot = slotRepo.save(slot);
 
-        return slotRepo.save(slot) ;
+        logger.info("Slot created successfully with id: {}", savedSlot.getId());
+
+        return savedSlot ;
     }
 
     @Override

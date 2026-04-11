@@ -32,3 +32,50 @@
 2026-04-11T14:46:40.548+05:30  INFO 4444 --- [appointmentBooking ] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
 2026-04-11T14:46:41.063+05:30  INFO 4444 --- [appointmentBooking ] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
 2026-04-11T14:46:41.070+05:30  INFO 4444 --- [appointmentBooking ] [main] c.a.a.AppointmentBookingApplication      : Started AppointmentBookingApplication in 6.612 seconds (process running for 7.409)
+2026-04-11T15:21:53.096+05:30  INFO 4444 --- [appointmentBooking ] [SpringApplicationShutdownHook] o.s.boot.tomcat.GracefulShutdown         : Commencing graceful shutdown. Waiting for active requests to complete
+2026-04-11T15:21:53.150+05:30  INFO 4444 --- [appointmentBooking ] [tomcat-shutdown] o.s.boot.tomcat.GracefulShutdown         : Graceful shutdown complete
+2026-04-11T15:21:53.217+05:30  INFO 4444 --- [appointmentBooking ] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-04-11T15:21:53.284+05:30  INFO 4444 --- [appointmentBooking ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2026-04-11T15:21:53.308+05:30  INFO 4444 --- [appointmentBooking ] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2026-04-11T15:22:03.520+05:30  INFO 8640 --- [appointmentBooking ] [main] c.a.a.AppointmentBookingApplication      : Starting AppointmentBookingApplication using Java 21.0.5 with PID 8640 (F:\AppoinmentSystem\AppoinmentBookingSystem\appointmentBooking_\target\classes started by ANIL in F:\AppoinmentSystem\AppoinmentBookingSystem)
+2026-04-11T15:22:03.525+05:30 DEBUG 8640 --- [appointmentBooking ] [main] c.a.a.AppointmentBookingApplication      : Running with Spring Boot v4.0.5, Spring v7.0.6
+2026-04-11T15:22:03.527+05:30  INFO 8640 --- [appointmentBooking ] [main] c.a.a.AppointmentBookingApplication      : No active profile set, falling back to 1 default profile: "default"
+2026-04-11T15:22:04.864+05:30  INFO 8640 --- [appointmentBooking ] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-04-11T15:22:04.946+05:30  INFO 8640 --- [appointmentBooking ] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 3 JPA repository interfaces.
+2026-04-11T15:22:05.680+05:30  INFO 8640 --- [appointmentBooking ] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-04-11T15:22:05.699+05:30  INFO 8640 --- [appointmentBooking ] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-04-11T15:22:05.700+05:30  INFO 8640 --- [appointmentBooking ] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.20]
+2026-04-11T15:22:05.789+05:30  INFO 8640 --- [appointmentBooking ] [main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 2142 ms
+2026-04-11T15:22:05.985+05:30  INFO 8640 --- [appointmentBooking ] [main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-04-11T15:22:06.093+05:30  INFO 8640 --- [appointmentBooking ] [main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.2.7.Final
+2026-04-11T15:22:06.699+05:30  INFO 8640 --- [appointmentBooking ] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-04-11T15:22:06.740+05:30  INFO 8640 --- [appointmentBooking ] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-04-11T15:22:07.225+05:30  INFO 8640 --- [appointmentBooking ] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26679788
+2026-04-11T15:22:07.227+05:30  INFO 8640 --- [appointmentBooking ] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-04-11T15:22:07.293+05:30  WARN 8640 --- [appointmentBooking ] [main] org.hibernate.orm.deprecation            : HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-04-11T15:22:07.316+05:30  INFO 8640 --- [appointmentBooking ] [main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/appointment_db]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.37
+	Default catalog/schema: appointment_db/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-04-11T15:22:08.541+05:30  INFO 8640 --- [appointmentBooking ] [main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-04-11T15:22:08.676+05:30  INFO 8640 --- [appointmentBooking ] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-04-11T15:22:08.760+05:30  INFO 8640 --- [appointmentBooking ] [main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-04-11T15:22:09.001+05:30 DEBUG 8640 --- [appointmentBooking ] [main] c.a.a.JWT.JwtAuthFilter                  : Filter 'jwtAuthFilter' configured for use
+2026-04-11T15:22:09.131+05:30  WARN 8640 --- [appointmentBooking ] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-04-11T15:22:09.239+05:30  INFO 8640 --- [appointmentBooking ] [main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-04-11T15:22:09.780+05:30  INFO 8640 --- [appointmentBooking ] [main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-04-11T15:22:09.785+05:30  INFO 8640 --- [appointmentBooking ] [main] c.a.a.AppointmentBookingApplication      : Started AppointmentBookingApplication in 7.059 seconds (process running for 8.001)
+2026-04-11T15:23:13.722+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-04-11T15:23:13.723+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-04-11T15:23:13.725+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2026-04-11T15:23:13.748+05:30  WARN 8640 --- [appointmentBooking ] [http-nio-8080-exec-2] o.s.w.s.h.HandlerMappingIntrospector     : Cache miss for REQUEST dispatch to '/auth/login' (previous null). Performing CorsConfiguration lookup. This is logged once only at WARN level, and every time at TRACE.
+2026-04-11T15:24:40.362+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-5] c.a.a.Service.AppointmentServiceImpl     : Booking request started for user: 7447433167 and slot: 4
+2026-04-11T15:24:40.404+05:30  INFO 8640 --- [appointmentBooking ] [http-nio-8080-exec-5] c.a.a.Service.AppointmentServiceImpl     : Appointment booked successfully for user: 7447433167 and slot: 4

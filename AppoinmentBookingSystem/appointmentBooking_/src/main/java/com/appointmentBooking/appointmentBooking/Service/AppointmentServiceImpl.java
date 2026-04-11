@@ -106,6 +106,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 
 
     @Override
+    @Transactional
     public String cancelAppointment(Long appointmentId) {
 
         logger.info("Cancel request for appointment: {}", appointmentId);
